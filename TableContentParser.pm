@@ -2,7 +2,7 @@
 #  A package to parse the contents of HTML tables.
 #  (C) 2002  Simon Drabble  <sdrabble@cpan.org>
 #
-#  $Id: TableContentParser.pm,v 1.6 2002/07/13 14:30:24 simon Exp $
+#  $Id: TableContentParser.pm,v 1.7 2002/07/14 15:00:43 simon Exp $
 
 
 package HTML::TableContentParser;
@@ -13,7 +13,7 @@ use HTML::Parser;
 
 use strict;
 
-our $VERSION = 0.12;
+our $VERSION = 0.13;
 
 our $DEBUG = 0;
 

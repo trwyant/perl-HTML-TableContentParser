@@ -1,5 +1,8 @@
 Revision history for Perl extension HTML::TableParser.
 
+0.13 Sun Jul 14 11:59:32 EDT 2002
+	- Added note about nested tables.
+
 0.12 Sat Jul 13 09:31:30 EDT 2002
 	- Reversed order of ChangeLog items
 	- Fixed problem where tags inside <td></td> were being ignored.

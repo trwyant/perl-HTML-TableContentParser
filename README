@@ -15,6 +15,9 @@ The module looks for HTML table elements described at
 Each table is a hashref consisting of an array of headers, and an array of
 rows. Each row consists of an array of cells, which each contain data.
 
+
+Currently, this module does not support nested tables.
+
 The module inherits from HTML::Parser, which does all the grunt work. 
 
 INSTALLATION
