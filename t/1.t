@@ -39,7 +39,7 @@ $html = qq{
 </head>
 <body>
 Some text that should /not/ get picked up by the parser.
-<table id='foo' name='bar' border='0'>
+<TABLE id='foo' name='bar' border='0'>
 <th>$header_text</th>
 <tr><td>$table_content1</td></tr>
 <tr><td>$table_content2</td></tr>
@@ -89,7 +89,7 @@ for (@rows) {
 $html .= qq{
 </table>
 Some more intermediary text which should be ignored.
-<table id='crumhorn' name='wallaby' border='0'>
+<TABLE id='crumhorn' name='wallaby' border='0'>
 };
 
 
@@ -144,9 +144,9 @@ $html = qq{
 <body>
 Some text that should /not/ get picked up by the parser.
 <table id='garbled' name='banjaxed' border='0'>
-<th>$header_text</td>
-<tr><th><td>$table_content1</td></tr>
-<tr><td>$table_content2</td></tr>
+<TH>$header_text</TD>
+<TR><TH><TD>$table_content1</TD></TR>
+<TR><TD>$table_content2</TD></TR>
 </table>
 </body>
 </html>

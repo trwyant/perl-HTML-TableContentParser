@@ -9,7 +9,7 @@ use HTML::Parser;
 
 use strict;
 
-our $VERSION = 0.10;
+our $VERSION = 0.11;
 
 our $DEBUG = 0;
 
@@ -23,6 +23,7 @@ sub start
 {
 	my ($self, $tag, $attr, $attrseq, $origtext) = @_;
 
+	$tag = lc($tag);
 	return unless grep { $_ eq $tag } @tag_names;
 
 # Store the incoming details in the current 'object'.
@@ -70,6 +71,7 @@ sub text
 sub end
 {
 	my ($self, $tag, $origtext) = @_;
+	$tag = lc($tag);
 	return unless grep { $_ eq $tag } @tag_names;
 
 # Turn off the current object
@@ -220,7 +222,7 @@ Nothing.
 
 =head1 AUTHOR
 
-  Simon Drabble  E<lt>simon@thebigmachine.orgE<gt>
+  Simon Drabble  E<lt>sdrabble@cpan.orgE<gt>
 
   (C) 2002  Simon Drabble  
 

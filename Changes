@@ -7,3 +7,6 @@ Revision history for Perl extension HTML::TableParser.
 0.10 Wed May 7 09:49:23 2002
   - First version released.
 
+0.11 Tue Jun 11 12:03:49 2002
+	- Fixed case sensitivity problem.
+	- Changed contact address.
