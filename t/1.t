@@ -1,9 +1,9 @@
-# $Id: 1.t,v 1.2 2002/05/22 20:39:18 simon Exp $
+# $Id: 1.t,v 1.4 2002/07/13 14:30:24 simon Exp $
 
 
 use Test;
 
-BEGIN { plan tests => 32 }
+BEGIN { plan tests => 34 }
 
 ## If in @INC, should succeed
 use HTML::TableContentParser;
@@ -29,8 +29,11 @@ ok(defined $obj, 1, $@);
 ## the correct values to the callback.
 
 
+$table_caption  = 'This is a caption';
 $table_content1 = 'This is table cell content 1';
 $table_content2 = 'This is table cell content 2';
+$table_content3 = '<a href="SomeLink">This is table cell content 3, a link</a>';
+$table_content4 = 'Some more text wrapping <a href="SomeLink">This is table cell content 4</a> a link.';
 $header_text = 'Header text';
 
 $html = qq{
@@ -40,9 +43,12 @@ $html = qq{
 <body>
 Some text that should /not/ get picked up by the parser.
 <TABLE id='foo' name='bar' border='0'>
+<CAPTION id='test'>$table_caption</CAPTION>
 <th>$header_text</th>
 <tr><td>$table_content1</td></tr>
 <tr><td>$table_content2</td></tr>
+<tr><td>$table_content3</td></tr>
+<tr><td>$table_content4</td></tr>
 </table>
 </body>
 </html>
@@ -54,8 +60,11 @@ Some text that should /not/ get picked up by the parser.
 
 $HTML::TableContentParser::DEBUG = 0;
 $tables = $obj->parse($html);
+ok($tables->[0]->{caption}->{data}, $table_caption, $@);
 ok($tables->[0]->{rows}->[0]->{cells}->[0]->{data}, $table_content1, $@);
 ok($tables->[0]->{rows}->[1]->{cells}->[0]->{data}, $table_content2, $@);
+ok($tables->[0]->{rows}->[2]->{cells}->[0]->{data}, $table_content3, $@);
+ok($tables->[0]->{rows}->[3]->{cells}->[0]->{data}, $table_content4, $@);
 
 
 
@@ -132,29 +141,5 @@ for $t (0..$#{@$tables}) {
 }
 
 
+### Tests for broken table removed in v0.12. 
 
-
-## Now provide a broken table. We wrap the call to parse in an eval, since the
-## parser dies if it encounters badness.
-
-$html = qq{
-<html>
-<head>
-</head>
-<body>
-Some text that should /not/ get picked up by the parser.
-<table id='garbled' name='banjaxed' border='0'>
-<TH>$header_text</TD>
-<TR><TH><TD>$table_content1</TD></TR>
-<TR><TD>$table_content2</TD></TR>
-</table>
-</body>
-</html>
-};
-
-
-## Set to 1 to debug this parse.
-$HTML::TableContentParser::DEBUG = 0;
-eval { $tables = $obj->parse($html)};
-
-ok($@, "text: Invalid HTML. Cannot parse.\n", $@);

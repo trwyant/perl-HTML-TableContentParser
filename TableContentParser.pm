@@ -1,4 +1,8 @@
-#  $Id: TableContentParser.pm,v 1.4 2002/06/04 16:00:23 simon Exp $
+#  TableContentParser
+#  A package to parse the contents of HTML tables.
+#  (C) 2002  Simon Drabble  <sdrabble@cpan.org>
+#
+#  $Id: TableContentParser.pm,v 1.6 2002/07/13 14:30:24 simon Exp $
 
 
 package HTML::TableContentParser;
@@ -9,14 +13,13 @@ use HTML::Parser;
 
 use strict;
 
-our $VERSION = 0.11;
+our $VERSION = 0.12;
 
 our $DEBUG = 0;
 
 
-
 # The tags we're interested in.
-my @tag_names = qw(table tr td th);
+my @tag_names = qw(table tr td th caption);
 
 
 sub start
@@ -24,26 +27,47 @@ sub start
 	my ($self, $tag, $attr, $attrseq, $origtext) = @_;
 
 	$tag = lc($tag);
-	return unless grep { $_ eq $tag } @tag_names;
 
 # Store the incoming details in the current 'object'.
 	if ($tag eq 'table') {
 		my $table = $attr;
 		push @{$self->{STORE}->{tables}}, $table;
 		$self->{STORE}->{current_table} = $table;
+
 	} elsif ($tag eq 'th') {
 		my $th = $attr;
 		push @{$self->{STORE}->{current_table}->{headers}}, $th;
 		$self->{STORE}->{current_header} = $th;
+		$self->{STORE}->{current_element} = $th;
+
 	} elsif ($tag eq 'tr') {
 		my $tr = $attr;
 		push @{$self->{STORE}->{current_table}->{rows}}, $tr;
 		$self->{STORE}->{current_row} = $tr;
+		$self->{STORE}->{current_element} = $tr;
+
 	} elsif ($tag eq 'td') {
 		my $td = $attr;
 		push @{$self->{STORE}->{current_row}->{cells}}, $td;
 		$self->{STORE}->{current_data_cell} = $td;
+		$self->{STORE}->{current_element} = $td;
+
+	} elsif ($tag eq 'caption') {
+		my $cap = $attr;
+		$self->{STORE}->{current_table}->{caption} = $cap;
+		$self->{STORE}->{current_element} = $cap;
+
+	} else {
+## Found a non-table related tag. Push it into the currently-defined td
+## or th (if one exists).
+		my $elem = $self->{STORE}->{current_element};
+		if ($elem) {
+			$self->debug('TEXT(tag) = ', $origtext) if $DEBUG;
+			$elem->{data} .= $origtext;
+		}
+		
 	}
+	
 	$self->debug($origtext) if $DEBUG;
 }
 
@@ -52,18 +76,13 @@ sub start
 sub text
 {
 	my ($self, $text) = @_;
-	my $td = $self->{STORE}->{current_data_cell};
-	my $th = $self->{STORE}->{current_header};
-	if ($td && $th) {
-		die "text: Invalid HTML. Cannot parse.\n";
-	} elsif (!$td && !$th) {
+	my $elem = $self->{STORE}->{current_element};
+	if (!$elem) {
 		return undef;
 	}
 
-	my $obj = $td || $th;
-
 	$self->debug('TEXT = ', $text) if $DEBUG;
-	$obj->{data} .= $text;
+	$elem->{data} .= $text;
 }
 
 
@@ -72,7 +91,6 @@ sub end
 {
 	my ($self, $tag, $origtext) = @_;
 	$tag = lc($tag);
-	return unless grep { $_ eq $tag } @tag_names;
 
 # Turn off the current object
 	if ($tag eq 'table') {
@@ -80,17 +98,37 @@ sub end
 		$self->{STORE}->{current_row} = undef;
 		$self->{STORE}->{current_data_cell} = undef;
 		$self->{STORE}->{current_header} = undef;
+		$self->{STORE}->{current_element} = undef;
+
 	} elsif ($tag eq 'th') {
 		$self->{STORE}->{current_row} = undef;
 		$self->{STORE}->{current_data_cell} = undef;
 		$self->{STORE}->{current_header} = undef;
+		$self->{STORE}->{current_element} = undef;
+
 	} elsif ($tag eq 'tr') {
 		$self->{STORE}->{current_row} = undef;
 		$self->{STORE}->{current_data_cell} = undef;
 		$self->{STORE}->{current_header} = undef;
+		$self->{STORE}->{current_element} = undef;
+
 	} elsif ($tag eq 'td') {
 		$self->{STORE}->{current_data_cell} = undef;
 		$self->{STORE}->{current_header} = undef;
+		$self->{STORE}->{current_element} = undef;
+
+	} elsif ($tag eq 'caption') {
+		$self->{STORE}->{current_element} = undef;
+
+	} else {
+## Found a non-table related close tag. Push it into the currently-defined
+## td or th (if one exists).
+		my $elem = $self->{STORE}->{current_element};
+		if ($elem) {
+			$self->debug('TEXT(tag) = ', $origtext) if $DEBUG;
+			$elem->{data} .= $origtext;
+		}
+		
 	}
 
 	$self->debug($origtext) if $DEBUG;
@@ -151,6 +189,11 @@ The format of each hash will look something like
   attributes            keys from the attributes of the <table> tag
   @{$table_headers}     array of table headers, in order found
   @{$table_rows}        rows discovered, in order
+
+If the table has a caption, this will be provided as 
+
+  caption               keys from the caption tag's attributes
+    data                the text of the <caption>..</caption> element
 
 then for each table row,
     @{$table_data}      td's found, in order

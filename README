@@ -1,9 +1,16 @@
 HTML/TableContentParser version 0.1
-============================
+===================================
+
+
 
 This module can be used to parse the content of tables in HTML text. The
 parser returns an arrayref consisting of data for each table found within the
 passed-in text.
+
+The module looks for HTML table elements described at
+
+  http://www.w3.org/TR/1999/REC-html401-19991224/struct/tables.html
+
 
 Each table is a hashref consisting of an array of headers, and an array of
 rows. Each row consists of an array of cells, which each contain data.
