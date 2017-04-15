@@ -124,7 +124,7 @@ $tables = $obj->parse($html);
 ok(@$tables, 2, @_);
 
 ## and three headers for each table
-for $t (0..$#{@$tables}) {
+for $t (0..$#$tables) {
 	for (0..$#hdrs) {
 		ok($tables->[$t]->{headers}->[$_]->{data}, $hdrs[$_], $@);
 	}
@@ -132,7 +132,7 @@ for $t (0..$#{@$tables}) {
 
 
 ## and three rows of three cells each, for each table.. (18 total).
-for $t (0..$#{@$tables}) {
+for $t (0..$#$tables) {
 	for $r (0..$#rows) {
 		for (0..2) {
 			ok($tables->[$t]->{rows}->[$r]->{cells}->[$_]->{data}, $rows[$r]->[$_], $@);
