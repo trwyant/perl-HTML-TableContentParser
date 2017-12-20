@@ -1,10 +1,3 @@
-#  TableContentParser
-#  A package to parse the contents of HTML tables.
-#  (C) 2002  Simon Drabble  <sdrabble@cpan.org>
-#
-#  $Id: TableContentParser.pm,v 1.7 2002/07/14 15:00:43 simon Exp $
-
-
 package HTML::TableContentParser;
 
 use HTML::Parser;
@@ -262,15 +255,32 @@ Nothing.
 
 =head2 CAVEATS, BUGS, and TODO
 
+=head1 SEE ALSO
+
+L<HTML::Parser|HTML::Parser>
+
+L<Mojo::DOM|Mojo::DOM> in the F<Mojolicious> distribution.
 
 =head1 AUTHOR
 
-  Simon Drabble  E<lt>sdrabble@cpan.orgE<gt>
+Simon Drabble  E<lt>sdrabble@cpan.orgE<gt>
 
-  (C) 2002  Simon Drabble  
+Thomas R. Wyant, III F<wyant at cpan dot org>
 
-This software is released under the same terms as perl.
+=head1 COPYRIGHT AND LICENSE
 
+Copyright (C) 2002 Simon Drabble
+
+Copyright (C) 2017 Thomas R. Wyant, III
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl 5.10.0. For more details, see the full text
+of the licenses in the directory LICENSES.
+
+This program is distributed in the hope that it will be useful, but
+without any warranty; without even the implied warranty of
+merchantability or fitness for a particular purpose.
 
 =cut
 
+# ex: set textwidth=72 :
