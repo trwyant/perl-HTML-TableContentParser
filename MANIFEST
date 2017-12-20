@@ -1,5 +1,5 @@
 Changes
-TableContentParser.pm
+lib/HTML/TableContentParser.pm
 LICENSES/Artistic
 LICENSES/Copying
 Makefile.PL
