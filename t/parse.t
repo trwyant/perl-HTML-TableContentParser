@@ -1,42 +1,27 @@
-# $Id: 1.t,v 1.5 2002/07/14 15:00:43 simon Exp $
+package main;
 
+use strict;
+use warnings;
 
-use Test;
-
-BEGIN { plan tests => 34 }
-
-## If in @INC, should succeed
 use HTML::TableContentParser;
-ok(1);
+use Test::More 0.88;
 
-## make sure we can turn on debugging..
-$HTML::TableContentParser::DEBUG = 1;
-ok(1);
-
-## ..and back off.
-$HTML::TableContentParser::DEBUG = 0;
-ok(1);
-
-
-## Test object creation
-
-$obj = HTML::TableContentParser->new();
-ok(defined $obj, 1, $@);
-
+my $obj = HTML::TableContentParser->new();
 
 
 ## Test basic functionality. Create a table, and make sure parsing it returns
 ## the correct values to the callback.
 
+note( 'Test basic functionality' );
 
-$table_caption  = 'This is a caption';
-$table_content1 = 'This is table cell content 1';
-$table_content2 = 'This is table cell content 2';
-$table_content3 = '<a href="SomeLink">This is table cell content 3, a link</a>';
-$table_content4 = 'Some more text wrapping <a href="SomeLink">This is table cell content 4</a> a link.';
-$header_text = 'Header text';
+my $table_caption  = 'This is a caption';
+my $table_content1 = 'This is table cell content 1';
+my $table_content2 = 'This is table cell content 2';
+my $table_content3 = '<a href="SomeLink">This is table cell content 3, a link</a>';
+my $table_content4 = 'Some more text wrapping <a href="SomeLink">This is table cell content 4</a> a link.';
+my $header_text = 'Header text';
 
-$html = qq{
+my $html = qq{
 <html>
 <head>
 </head>
@@ -54,19 +39,21 @@ Some text that should /not/ get picked up by the parser.
 </html>
 };
 
-
-
-
-
 $HTML::TableContentParser::DEBUG = 0;
-$tables = $obj->parse($html);
-ok($tables->[0]->{caption}->{data}, $table_caption, $@);
-ok($tables->[0]->{rows}->[0]->{cells}->[0]->{data}, $table_content1, $@);
-ok($tables->[0]->{rows}->[1]->{cells}->[0]->{data}, $table_content2, $@);
-ok($tables->[0]->{rows}->[2]->{cells}->[0]->{data}, $table_content3, $@);
-ok($tables->[0]->{rows}->[3]->{cells}->[0]->{data}, $table_content4, $@);
+
+my $tables = $obj->parse($html);
+is( $tables->[0]->{caption}->{data}, $table_caption, 'Table caption' );
+is( $tables->[0]->{rows}->[0]->{cells}->[0]->{data}, $table_content1,
+    'First row' );
+is( $tables->[0]->{rows}->[1]->{cells}->[0]->{data}, $table_content2,
+    'Second row' );
+is( $tables->[0]->{rows}->[2]->{cells}->[0]->{data}, $table_content3,
+    'Third row' );
+is( $tables->[0]->{rows}->[3]->{cells}->[0]->{data}, $table_content4,
+    'Fourth row' );
 
 
+note( 'More complex HTML' );
 
 
 ## Some more complicated tables..
@@ -121,21 +108,26 @@ $HTML::TableContentParser::DEBUG = 0;
 $tables = $obj->parse($html);
 
 ## We should have two tables..
-ok(@$tables, 2, @_);
+cmp_ok( @$tables, '==', 2, 'Have 2 tables' );
 
 ## and three headers for each table
-for $t (0..$#$tables) {
-	for (0..$#hdrs) {
-		ok($tables->[$t]->{headers}->[$_]->{data}, $hdrs[$_], $@);
+for my $t ( 0 .. $#$tables ) {
+	for ( 0 .. $#hdrs ) {
+		is( $tables->[$t]->{headers}->[$_]->{data}, $hdrs[$_],
+		    "Table $t column $_ header" );
 	}
 }
 
 
 ## and three rows of three cells each, for each table.. (18 total).
-for $t (0..$#$tables) {
-	for $r (0..$#rows) {
+for my $t ( 0 .. $#$tables ) {
+	for my $r ( 0 .. $#rows ) {
 		for (0..2) {
-			ok($tables->[$t]->{rows}->[$r]->{cells}->[$_]->{data}, $rows[$r]->[$_], $@);
+			is(
+			    $tables->[$t]->{rows}->[$r]->{cells}->[$_]->{data},
+			    $rows[$r]->[$_],
+			    "Table $t row $r column $_",
+			);
 		}
 	}
 }
@@ -206,3 +198,9 @@ for $t (0..$#$tables) {
 #####	}
 #####}
 #####
+
+done_testing;
+
+1;
+
+# ex: set textwidth=72 :

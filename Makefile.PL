@@ -26,7 +26,7 @@ $arg{ $mmv >= 6.52 ? 'CONFIGURE_REQUIRES' : 'PREREQ_PM' }
 
 $arg{ $mmv >= 6.64 ? 'TEST_REQUIRES' :
     $mmv >= 6.5503 ? 'BUILD_REQUIRES' : 'PREREQ_PM' }
-    { 'Test' } = 0;
+    { 'Test::More' } = 0.88;
 
 WriteMakefile( %arg );
 

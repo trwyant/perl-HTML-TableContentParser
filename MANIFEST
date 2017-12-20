@@ -7,7 +7,8 @@ MANIFEST
 META.json
 META.yml
 README
-t/1.t
+t/basic.t
+t/parse.t
 TODO
 xt/author/changes.t
 xt/author/critic.t
