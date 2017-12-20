@@ -12,7 +12,9 @@ my %arg = (
     'VERSION_FROM'	=> 'lib/HTML/TableContentParser.pm', # finds $VERSION
     'PREREQ_PM'		=> {
 	'HTML::Parser'	=> 0,
+	'parent'	=> 0,
 	'strict'	=> 0,
+	'warnings'	=> 0,
     }, # e.g., Module::Name => 1.1
 );
 
