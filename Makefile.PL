@@ -27,3 +27,26 @@ $arg{ $mmv >= 6.64 ? 'TEST_REQUIRES' :
     { 'Test' } = 0;
 
 WriteMakefile( %arg );
+
+sub MY::postamble {
+    my ( $self, @args ) = @_;
+
+    my $authortest = $self->test_via_harness(
+	'$(FULLPERLRUN)', '$(AUTHORTEST_FILES)' );
+    $authortest =~ s/ \s+ \z //smx;
+    $authortest =~ s/ \A \s+ //smx;
+    chomp $authortest;
+
+    return <<"EOD";
+
+AUTHORTEST_FILES = t/*.t xt/author/*.t
+
+authortest :: pure_all
+	AUTHOR_TESTING=1 $authortest
+
+testcover :: pure_all
+	cover -test
+EOD
+}
+
+# ex: set textwidth=72 :
