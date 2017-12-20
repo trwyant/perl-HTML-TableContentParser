@@ -175,7 +175,7 @@ HTML::TableContentParser - Do interesting things with the contents of tables.
 This package pulls out the contents of a table from a string containing HTML.
 Each time a table is encountered, data will be stored in an array consisting
 of a hash of whatever was discovered about the table -- id, name, border,
-cellspacing etc, and of course data contained within the table. 
+cell spacing etc, and of course data contained within the table. 
 
 The format of each hash will look something like
 
