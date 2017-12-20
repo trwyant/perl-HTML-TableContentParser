@@ -53,13 +53,13 @@ sub start
 ## or th (if one exists).
 		my $elem = $self->{STORE}->{current_element};
 		if ($elem) {
-			$self->debug('TEXT(tag) = ', $origtext) if $DEBUG;
+			$self->_debug('TEXT(tag) = ', $origtext) if $DEBUG;
 			$elem->{data} .= $origtext;
 		}
 		
 	}
 	
-	$self->debug($origtext) if $DEBUG;
+	$self->_debug($origtext) if $DEBUG;
 
 	return;
 }
@@ -74,7 +74,7 @@ sub text
 		return;
 	}
 
-	$self->debug('TEXT = ', $text) if $DEBUG;
+	$self->_debug('TEXT = ', $text) if $DEBUG;
 	$elem->{data} .= $text;
 
 	return;
@@ -120,13 +120,13 @@ sub end
 ## td or th (if one exists).
 		my $elem = $self->{STORE}->{current_element};
 		if ($elem) {
-			$self->debug('TEXT(tag) = ', $origtext) if $DEBUG;
+			$self->_debug('TEXT(tag) = ', $origtext) if $DEBUG;
 			$elem->{data} .= $origtext;
 		}
 		
 	}
 
-	$self->debug($origtext) if $DEBUG;
+	$self->_debug($origtext) if $DEBUG;
 
 	return;
 }
@@ -151,7 +151,7 @@ sub parse
 
 
 
-sub debug
+sub _debug
 {
 	my ( $self, @args ) = @_;
 	my $class = ref($self);
