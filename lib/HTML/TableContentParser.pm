@@ -1,23 +1,21 @@
 package HTML::TableContentParser;
 
+use strict;
+use warnings;
+
 use HTML::Parser;
 
-@ISA = qw(HTML::Parser);
-
-use strict;
+our @ISA = qw(HTML::Parser);
 
 our $VERSION = 0.13;
 
 our $DEBUG = 0;
 
 
-# The tags we're interested in.
-my @tag_names = qw(table tr td th caption);
-
-
 sub start
 {
-	my ($self, $tag, $attr, $attrseq, $origtext) = @_;
+#	my ($self, $tag, $attr, $attrseq, $origtext) = @_;
+	my ($self, $tag, $attr, undef, $origtext) = @_;
 
 	$tag = lc($tag);
 
@@ -62,6 +60,8 @@ sub start
 	}
 	
 	$self->debug($origtext) if $DEBUG;
+
+	return;
 }
 
 
@@ -71,11 +71,13 @@ sub text
 	my ($self, $text) = @_;
 	my $elem = $self->{STORE}->{current_element};
 	if (!$elem) {
-		return undef;
+		return;
 	}
 
 	$self->debug('TEXT = ', $text) if $DEBUG;
 	$elem->{data} .= $text;
+
+	return;
 }
 
 
@@ -125,6 +127,8 @@ sub end
 	}
 
 	$self->debug($origtext) if $DEBUG;
+
+	return;
 }
 
 
@@ -149,9 +153,10 @@ sub parse
 
 sub debug
 {
-	my ($self) = shift;
+	my ( $self, @args ) = @_;
 	my $class = ref($self);
-	warn "$class: ", join('', @_), "\n";
+	warn "$class: ", join( '', @args ), "\n";
+	return;
 }
 
 
