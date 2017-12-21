@@ -21,6 +21,14 @@ my %arg = (
 $mmv >= 6.31
     and $arg{LICENSE} = 'perl_5';
 
+$mmv >= 6.4501 and $args{META_MERGE} = {
+    resources => {
+	bugtracker =>
+	'https://rt.cpan.org/Public/Dist/Display.html?Name=HTML-TableContentParser',
+	license => 'http://dev.perl.org/licenses/',
+    },
+};
+
 $arg{ $mmv >= 6.52 ? 'CONFIGURE_REQUIRES' : 'PREREQ_PM' }
     { 'ExtUtils::MakeMaker' } = 0;
 
