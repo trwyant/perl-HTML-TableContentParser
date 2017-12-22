@@ -1,4 +1,7 @@
-Revision history for Perl extension HTML::TableParser.
+0.199_01	2017-12-21	T. R. Wyant
+    Fix RT 32010: Test fails under Perl 5.10.0.
+
+    Modernize structure, metadata.
 
 0.13		2002-07-14	S. Drabble
     - Added note about nested tables.
