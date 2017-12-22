@@ -260,9 +260,18 @@ Nothing.
 
 =head1 SEE ALSO
 
-L<HTML::Parser|HTML::Parser>
+This module is a very specific tool to address a very specific problem.
+One of the following modules may better address your needs.
 
-L<Mojo::DOM|Mojo::DOM> in the F<Mojolicious> distribution.
+L<HTML::Parser|HTML::Parser>. This is a general HTML parser, which form
+the basis for this module.
+
+L<HTML::TreeBuilder|HTML::TreeBuilder>. This is a general HTML parser,
+with methods to search and traverse the parse tree once generated.
+
+L<Mojo::DOM|Mojo::DOM> in the F<Mojolicious> distribution. This is a
+general HTML/XML DOM parser, with methods to search the parse tree using
+CSS selectors.
 
 =head1 AUTHOR
 
