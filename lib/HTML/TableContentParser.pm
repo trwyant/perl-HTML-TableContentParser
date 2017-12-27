@@ -54,9 +54,9 @@ sub start
 			$self->_debug('TEXT(tag) = ', $origtext) if $DEBUG;
 			$elem->{data} .= $origtext;
 		}
-		
+
 	}
-	
+
 	$self->_debug($origtext) if $DEBUG;
 
 	return;
@@ -121,7 +121,7 @@ sub end
 			$self->_debug('TEXT(tag) = ', $origtext) if $DEBUG;
 			$elem->{data} .= $origtext;
 		}
-		
+
 	}
 
 	$self->_debug($origtext) if $DEBUG;
@@ -178,7 +178,7 @@ HTML::TableContentParser - Do interesting things with the contents of tables.
 This package pulls out the contents of a table from a string containing HTML.
 Each time a table is encountered, data will be stored in an array consisting
 of a hash of whatever was discovered about the table -- id, name, border,
-cell spacing etc, and of course data contained within the table. 
+cell spacing etc, and of course data contained within the table.
 
 The format of each hash will look something like
 
@@ -186,7 +186,7 @@ The format of each hash will look something like
   @{$table_headers}     array of table headers, in order found
   @{$table_rows}        rows discovered, in order
 
-If the table has a caption, this will be provided as 
+If the table has a caption, this will be provided as
 
   caption               keys from the caption tag's attributes
     data                the text of the <caption>..</caption> element
@@ -198,7 +198,7 @@ then for each table row,
 then for each data cell,
       data              what comes between <td> and </td>
       other attributes  the ... in <td ...>
-		  
+
 
 =head2 EXAMPLE
 
@@ -210,13 +210,13 @@ then for each data cell,
     for $r (@{$t->{rows}}) {
 			print "Row: ";
       for $c (@{$r->{cells}}) {
-        print "[$c->{data}] ";				
-      }				
-      print "\n";			
+        print "[$c->{data}] ";
+      }
+      print "\n";
     }
   }
 
-	
+
 =head1 METHODS
 
 =over 4
@@ -227,19 +227,19 @@ Called whenever a particular start tag has been recognised. This is called
 automatically by the parser and should not be called from the application.
 
 
-=item text($parser, $content); 
+=item text($parser, $content);
 
 Called whenever a piece of content is encountered. This is called
 automatically by the parser and should not be called from the application.
 
-=item end($parser, $tag, $origtext);  
+=item end($parser, $tag, $origtext);
 
 Called whenever a particular end tag is encountered. This is called
 automatically by the parser and should not be called from the application.
 
 =item $tables_ref = $p->parse($html);
 
-Called with the HTML to parse. This is all the application needs to do. 
+Called with the HTML to parse. This is all the application needs to do.
 The return value will be an arrayref containing each table encountered, in the
 format detailed above.
 
