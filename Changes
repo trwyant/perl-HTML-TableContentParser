@@ -1,4 +1,4 @@
-0.199_01	2017-12-21	T. R. Wyant
+0.200		2017-12-27	T. R. Wyant
     Fix RT 32010: Test fails under Perl 5.10.0.
 
     Modernize structure, metadata.
