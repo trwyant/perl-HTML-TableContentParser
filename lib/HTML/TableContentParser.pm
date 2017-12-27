@@ -134,6 +134,11 @@ sub parse
 {
 	my ($self, $data) = @_;
 
+	unless ( defined $data ) {	# RT 7262
+	    require Carp;
+	    Carp::croak( 'Argument must be defined' );
+	}
+
 	$self->{STORE} = undef;
 
 # Ensure the following keys exist
@@ -242,6 +247,9 @@ automatically by the parser and should not be called from the application.
 Called with the HTML to parse. This is all the application needs to do.
 The return value will be an arrayref containing each table encountered, in the
 format detailed above.
+
+This method will C<croak()> if the argument is not defined, or not
+specified.
 
 =item DEBUG
 

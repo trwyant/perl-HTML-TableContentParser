@@ -8,6 +8,12 @@ use Test::More 0.88;
 
 my $obj = HTML::TableContentParser->new();
 
+eval {
+    $obj->parse();
+    fail( 'parse() with no argument did not fail' );
+    1;
+} or like( $@, qr{ \A \QArgument must be defined\E }smx,
+    'parse() with no argument failed correctly (RT 7262)' );
 
 ## Test basic functionality. Create a table, and make sure parsing it returns
 ## the correct values to the callback.
