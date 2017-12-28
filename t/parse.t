@@ -28,14 +28,16 @@ my $table_content4 = 'Some more text wrapping <a href="SomeLink">This is table c
 my $header_text = 'Header text';
 
 my $html = qq{
+<!DOCTYPE HTML SYSTEM>
 <html>
 <head>
+<title>Test</title>
 </head>
 <body>
 Some text that should /not/ get picked up by the parser.
-<TABLE id='foo' name='bar' border='0'>
+<TABLE id='foo' border='0'>
 <CAPTION id='test'>$table_caption</CAPTION>
-<th>$header_text</th>
+<tr><th>$header_text</th></tr>
 <tr><td>$table_content1</td></tr>
 <tr><td>$table_content2</td></tr>
 <tr><td>$table_content3</td></tr>
@@ -49,13 +51,13 @@ $HTML::TableContentParser::DEBUG = 0;
 
 my $tables = $obj->parse($html);
 is( $tables->[0]->{caption}->{data}, $table_caption, 'Table caption' );
-is( $tables->[0]->{rows}->[0]->{cells}->[0]->{data}, $table_content1,
+is( $tables->[0]->{rows}->[1]->{cells}->[0]->{data}, $table_content1,
     'First row' );
-is( $tables->[0]->{rows}->[1]->{cells}->[0]->{data}, $table_content2,
+is( $tables->[0]->{rows}->[2]->{cells}->[0]->{data}, $table_content2,
     'Second row' );
-is( $tables->[0]->{rows}->[2]->{cells}->[0]->{data}, $table_content3,
+is( $tables->[0]->{rows}->[3]->{cells}->[0]->{data}, $table_content3,
     'Third row' );
-is( $tables->[0]->{rows}->[3]->{cells}->[0]->{data}, $table_content4,
+is( $tables->[0]->{rows}->[4]->{cells}->[0]->{data}, $table_content4,
     'Fourth row' );
 
 
@@ -74,15 +76,17 @@ my @hdrs = qw(h1 h2 h3);
 
 
 $html = qq{
+<!DOCTYPE HTML SYSTEM>
 <html>
 <head>
+<title>Test</title>
 </head>
 <body>
 Some text that should /not/ get picked up by the parser.
-<table id='fruznit' name='braknor' border='0'>
+<table id='fruznit' border='0'>
 };
 
-$html .= '<th>' . join('</th><th>', @hdrs) . "</th>\n";
+$html .= '<tr><th>' . join('</th><th>', @hdrs) . "</th></tr>\n";
 
 for (@rows) {
 	$html .= '<tr><td>' . join('</td><td>', @$_) . "</td></tr>\n";
@@ -91,11 +95,11 @@ for (@rows) {
 $html .= qq{
 </table>
 Some more intermediary text which should be ignored.
-<TABLE id='crumhorn' name='wallaby' border='0'>
+<TABLE id='crumhorn' border='0'>
 };
 
 
-$html .= '<th>' . join('</th><th>', @hdrs) . "</th>\n";
+$html .= '<tr><th>' . join('</th><th>', @hdrs) . "</th></tr>\n";
 
 for (@rows) {
 	$html .= '<tr><td>' . join('</td><td>', @$_) . "</td></tr>\n";
@@ -130,7 +134,7 @@ for my $t ( 0 .. $#$tables ) {
 	for my $r ( 0 .. $#rows ) {
 		for (0..2) {
 			is(
-			    $tables->[$t]->{rows}->[$r]->{cells}->[$_]->{data},
+			    $tables->[$t]->{rows}->[$r+1]->{cells}->[$_]->{data},
 			    $rows[$r]->[$_],
 			    "Table $t row $r column $_",
 			);
