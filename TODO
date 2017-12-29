@@ -6,3 +6,4 @@ o  More validation of element layout (tbody must come after tfoot, which must
    package -- TRW]
 o  [ Current (0.13/0.200) <th> functionality is broken, because <th>
    defines a column just like <td> does, and is part of a <tr>. -- TRW]
+o  [ Simplify code before doing nested tables. -- TRW]

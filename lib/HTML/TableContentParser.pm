@@ -26,7 +26,6 @@ sub start
 	} elsif ($tag eq 'th') {
 		my $th = $attr;
 		push @{$self->{STORE}->{current_table}->{headers}}, $th;
-		$self->{STORE}->{current_header} = $th;
 		$self->{STORE}->{current_element} = $th;
 
 	} elsif ($tag eq 'tr') {
@@ -38,7 +37,6 @@ sub start
 	} elsif ($tag eq 'td') {
 		my $td = $attr;
 		push @{$self->{STORE}->{current_row}->{cells}}, $td;
-		$self->{STORE}->{current_data_cell} = $td;
 		$self->{STORE}->{current_element} = $td;
 
 	} elsif ($tag eq 'caption') {
@@ -89,25 +87,17 @@ sub end
 	if ($tag eq 'table') {
 		$self->{STORE}->{current_table} = undef;
 		$self->{STORE}->{current_row} = undef;
-		$self->{STORE}->{current_data_cell} = undef;
-		$self->{STORE}->{current_header} = undef;
 		$self->{STORE}->{current_element} = undef;
 
 	} elsif ($tag eq 'th') {
 		$self->{STORE}->{current_row} = undef;
-		$self->{STORE}->{current_data_cell} = undef;
-		$self->{STORE}->{current_header} = undef;
 		$self->{STORE}->{current_element} = undef;
 
 	} elsif ($tag eq 'tr') {
 		$self->{STORE}->{current_row} = undef;
-		$self->{STORE}->{current_data_cell} = undef;
-		$self->{STORE}->{current_header} = undef;
 		$self->{STORE}->{current_element} = undef;
 
 	} elsif ($tag eq 'td') {
-		$self->{STORE}->{current_data_cell} = undef;
-		$self->{STORE}->{current_header} = undef;
 		$self->{STORE}->{current_element} = undef;
 
 	} elsif ($tag eq 'caption') {
@@ -139,12 +129,7 @@ sub parse
 	    Carp::croak( 'Argument must be defined' );
 	}
 
-	$self->{STORE} = undef;
-
-# Ensure the following keys exist
-	$self->{STORE}->{current_data_cell} = undef;
-	$self->{STORE}->{current_row} = undef;
-	$self->{STORE}->{current_table} = undef;
+	$self->{STORE} = {};
 
 	$self->SUPER::parse($data);
 
