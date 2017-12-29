@@ -256,7 +256,7 @@ Nothing.
 This module is a very specific tool to address a very specific problem.
 One of the following modules may better address your needs.
 
-L<HTML::Parser|HTML::Parser>. This is a general HTML parser, which form
+L<HTML::Parser|HTML::Parser>. This is a general HTML parser, which forms
 the basis for this module.
 
 L<HTML::TreeBuilder|HTML::TreeBuilder>. This is a general HTML parser,
