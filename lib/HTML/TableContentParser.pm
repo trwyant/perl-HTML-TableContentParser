@@ -9,6 +9,7 @@ our $VERSION = '0.200';
 
 our $DEBUG = 0;
 
+my @stacked = qw{ current_table current_row current_element };
 
 sub start
 {
@@ -20,8 +21,12 @@ sub start
 # Store the incoming details in the current 'object'.
 	if ($tag eq 'table') {
 		my $table = $attr;
+		push @{ $self->{STORE}{stack} }, {
+			map { $_ => $self->{STORE}{$_} } @stacked };
 		push @{$self->{STORE}->{tables}}, $table;
 		$self->{STORE}->{current_table} = $table;
+		$self->{STORE}->{current_row} = undef;
+		$self->{STORE}->{current_element} = undef;
 
 	} elsif ($tag eq 'th') {
 		my $th = $attr;
@@ -85,9 +90,8 @@ sub end
 
 # Turn off the current object
 	if ($tag eq 'table') {
-		$self->{STORE}->{current_table} = undef;
-		$self->{STORE}->{current_row} = undef;
-		$self->{STORE}->{current_element} = undef;
+		my $prev = pop @{ $self->{STORE}{stack} } || [];
+		$self->{STORE}{$_} = $prev->{$_} for @stacked;
 
 	} elsif ($tag eq 'th') {
 		$self->{STORE}->{current_row} = undef;
@@ -129,11 +133,16 @@ sub parse
 	    Carp::croak( 'Argument must be defined' );
 	}
 
-	$self->{STORE} = {};
+	$self->{STORE} = {
+	    stack	=> [],
+	};
 
 	$self->SUPER::parse($data);
 
-	return $self->{STORE}->{tables};
+	my $tables = $self->{STORE}{tables};
+	delete $self->{STORE};
+
+	return $tables;
 }
 
 
@@ -169,6 +178,12 @@ This package pulls out the contents of a table from a string containing HTML.
 Each time a table is encountered, data will be stored in an array consisting
 of a hash of whatever was discovered about the table -- id, name, border,
 cell spacing etc, and of course data contained within the table.
+
+Tables appear in the output in the order in which they are encountered.
+If a table is nested inside a cell of another table, it will appear
+after the containing table in the output, and any connection between the
+two will be lost. As of version 0.200_01, the appearance of a nested
+table should not cause any truncation of the containing table.
 
 The format of each hash will look something like
 
