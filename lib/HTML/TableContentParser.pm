@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw{ HTML::Parser };
 
-our $VERSION = '0.201';
+our $VERSION = '0.299_01';
 
 our $CLASSIC = 0;
 our $DEBUG = 0;
@@ -269,12 +269,12 @@ order encountered, with C<undef> representing any C<< <th> >> tags
 encountered. Trailing C<undef> values will be dropped, and the entire
 key will be absent unless actual C<< <td> >> tags are found in the row.
 
-Note that prior to version [%% next_version %%], C<< <th> >> tags were not
+Note that prior to version 0.299_01, C<< <th> >> tags were not
 represented at all.
 
 =item headers
 
-new with version [%% next_version %%], this is a reference to an array containing all the
+new with version 0.299_01, this is a reference to an array containing all the
 C<< <th> >> tags in the row, in the order encountered, with C<undef>
 representing any C<< <td> >> tags. Trailing C<undef> values will be
 dropped, and the entire key will be absent unless actual C<< <th> >>
@@ -327,12 +327,12 @@ argument is
 =item classic
 
 If this argument is set to C<1>, C<< <th> >> tags are handled in the
-pre-[%% next_version %%] way. That is, the C<< <tr> >> hash will not
+pre-0.299_01 way. That is, the C<< <tr> >> hash will not
 contain a C<{headers}> key, and its C<{cells}> key will not contain any
 C<undef> values corresponding to C<< <th> >> elements.
 
 If this argument is set to C<0>, you get the behavior documented for
-[%% next_version %%] and after.
+0.299_01 and after.
 
 If this argument is C<undef> or omitted, the value of
 L<$HTML::TableContentParser::CLASSIC|/HTML::TableContentParser::CLASSIC>
