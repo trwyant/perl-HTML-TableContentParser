@@ -198,7 +198,7 @@ HTML::TableContentParser - Do interesting things with the contents of tables.
   use HTML::TableContentParser;
   my $p = HTML::TableContentParser->new();
   my $html = read_html_from_somewhere();
-  my $tables = $p->parse_file( $html );
+  my $tables = $p->parse( $html );
   for my $t (@$tables) {
     for my $r (@{$t->{rows}}) {
       print 'Row:';
