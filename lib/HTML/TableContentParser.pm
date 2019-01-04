@@ -411,7 +411,7 @@ Thomas R. Wyant, III F<wyant at cpan dot org>
 
 Copyright (C) 2002 Simon Drabble
 
-Copyright (C) 2017-2018 Thomas R. Wyant, III
+Copyright (C) 2017-2019 Thomas R. Wyant, III
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl 5.10.0. For more details, see the full text
