@@ -1,4 +1,4 @@
-0.300_01	2019-01-03	T. R. Wyant
+0.301		2019-01-11	T. R. Wyant
     RT 128088 Synopsis should call parse(), not parse_file(). Thanks to
     jabowery for catching this.
 
