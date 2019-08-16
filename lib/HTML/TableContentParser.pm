@@ -335,7 +335,7 @@ If this argument is set to C<0>, you get the behavior documented for
 0.299_01 and after.
 
 If this argument is C<undef> or omitted, the value of
-L<$HTML::TableContentParser::CLASSIC|/HTML::TableContentParser::CLASSIC>
+L<$HTML::TableContentParser::CLASSIC|/$HTML::TableContentParser::CLASSIC>
 is used.
 
 No other values are supported -- that is, the author reserves them, and
