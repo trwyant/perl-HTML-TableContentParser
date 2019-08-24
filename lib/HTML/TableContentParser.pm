@@ -5,7 +5,7 @@ use warnings;
 
 use parent qw{ HTML::Parser };
 
-our $VERSION = '0.301_01';
+our $VERSION = '0.302';
 
 our $CLASSIC = 0;
 our $DEBUG = 0;
