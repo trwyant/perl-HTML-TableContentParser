@@ -386,6 +386,10 @@ is,
 occupies three columns in the HTML table, but only two entries are made
 in the C<{cells}> value of the hash that represents this row.
 
+Please file bug reports at
+L<https://github.com/trwyant/perl-HTML-TableContentParser/issues>, or in
+electronic mail to F<wyant at cpan dot org>.
+
 =head1 SEE ALSO
 
 This module is a very specific tool to address a very specific problem.
