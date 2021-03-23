@@ -46,7 +46,8 @@ if ( $mmv >= 6.4501 ) {
 	},
 	resources => {
 	    bugtracker => {
-		web	=> 'https://github.com/trwyant/perl-HTML-TableContentParser/issues',
+		web	=> 'https://rt.cpan.org/Public/Dist/Display.html?Name=HTML-TableContentParser',
+		# web	=> 'https://github.com/trwyant/perl-HTML-TableContentParser/issues',
 		mailto	=> 'wyant@cpan.org',
 	    },
 	    license => 'http://dev.perl.org/licenses/',
