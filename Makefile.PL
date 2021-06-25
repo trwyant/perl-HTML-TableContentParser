@@ -36,9 +36,8 @@ $mmv >= 6.31
 
 if ( $mmv >= 6.4501 ) {
     $args{META_ADD} = {
-	no_index	=> {
-	    directory	=> [ qw{ inc t xt } ],
-	},
+	no_index	=> no_index(),
+	provides(),
     };
     $args{META_MERGE} = {
 	'meta-spec'	=> {
@@ -57,7 +56,6 @@ if ( $mmv >= 6.4501 ) {
 		web	=> 'https://github.com/trwyant/perl-HTML-TableContentParser',
 	    },
 	},
-	provides(),
     };
 }
 
@@ -118,6 +116,12 @@ testcover :: pure_all
 EOD
 }
 
+sub no_index {
+    return +{
+	directory	=> [ qw{ inc t xt } ],
+    };
+}
+
 sub provides {
     -d 'lib'
 	or return;
@@ -126,6 +130,27 @@ sub provides {
 	require Module::Metadata;
 	Module::Metadata->provides( version => 2, dir => 'lib' );
     } or return;
+
+    eval {
+	require CPAN::Meta;
+	# Skeleton so we can use should_index_file() and
+	# should_index_package().
+	my $meta = CPAN::Meta->new( {
+		name	=> 'Euler',
+		version	=> 2.71828,
+		no_index	=> no_index(),
+	    },
+	);
+	foreach my $pkg ( keys %{ $provides } ) {
+	    $meta->should_index_package( $pkg )
+		and $meta->should_index_file( $provides->{$pkg}{file} )
+		and next;
+	    delete $provides->{$pkg};
+	}
+
+	1;
+    } or return;
+
     return ( provides => $provides );
 }
 
