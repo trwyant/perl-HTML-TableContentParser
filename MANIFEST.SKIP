@@ -21,5 +21,4 @@ CVS/
 \.svn/
 \.swp$
 ^tools/
-^\.travis\.yml$
 ^TODO$
