@@ -6,6 +6,9 @@
 ^cover_db/
 CVS/
 ^foo
+^.git/
+^.github/
+^.gitignore$
 ^html/
 ^HTML-TableContentParser
 ^Makefile$
@@ -17,7 +20,6 @@ CVS/
 \.old$
 ^pod2htm.\.tmp$
 ^ref/
-\.git(?:ignore$|/)
 \.svn/
 \.swp$
 ^tools/
