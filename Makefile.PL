@@ -13,7 +13,7 @@ use ExtUtils::MakeMaker;
 my %args = (
     AUTHOR		=> [
 	'Simon Drabble (sdrabble@cpan.org)',
-	'Tom Wyant (wyant at cpan dot org)',
+	'Tom Wyant (harryfmudd at comcast dot net)',
     ],
     ABSTRACT		=> 'Extract tables from HTML',
     NAME		=> 'HTML::TableContentParser',
@@ -47,7 +47,7 @@ if ( $mmv >= 6.4501 ) {
 	    bugtracker => {
 		web	=> 'https://rt.cpan.org/Public/Dist/Display.html?Name=HTML-TableContentParser',
 		# web	=> 'https://github.com/trwyant/perl-HTML-TableContentParser/issues',
-		mailto	=> 'wyant@cpan.org',
+		mailto	=> 'harryfmudd@comcast.net',
 	    },
 	    license => 'http://dev.perl.org/licenses/',
 	    repository	=> {
