@@ -387,8 +387,7 @@ occupies three columns in the HTML table, but only two entries are made
 in the C<{cells}> value of the hash that represents this row.
 
 Please file bug reports at
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=HTML-TableContentParser>,
-L<https://github.com/trwyant/perl-HTML-TableContentParser/issues>, or in
+L<https://github.com/trwyant/perl-HTML-TableContentParser/issues> or in
 electronic mail to F<harryfmudd at comcast dot net>.
 
 =head1 SEE ALSO
