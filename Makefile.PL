@@ -72,13 +72,13 @@ $mmv >= 6.4701
 $mmv >= 6.5702
     or $args{AUTHOR} = join ', ', @{ $args{AUTHOR} };
 
-if ( $mmv >= 6.52 ) {
+if ( $mmv >= 6.55_03 ) {
     $args{BUILD_REQUIRES} = \%build_requires;
     $args{CONFIGURE_REQUIRES} = \%config_requires;
-} elsif ( $mmv >= 6.5501 ) {
-    $args{BUILD_REQUIRES} = \%build_requires;
-    $args{META_MERGE}{configure_requires} = \%config_requires;
-} elsif ( $mmv >= 6.4501 ) {
+} elsif ( $mmv >= 6.52 ) {
+    $args{META_MERGE}{build_requires} = \%build_requires;
+    $args{CONFIGURE_REQUIRES} = \%config_requires;
+} elsif ( $mmv >= 6.45_01 ) {
     $args{META_MERGE}{build_requires} = \%build_requires;
     $args{META_MERGE}{configure_requires} = \%config_requires;
 } else {
