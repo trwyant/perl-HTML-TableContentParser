@@ -40,9 +40,6 @@ if ( $mmv >= 6.4501 ) {
 	provides(),
     };
     $args{META_MERGE} = {
-	'meta-spec'	=> {
-	    version	=> 2,
-	},
 	resources => {
 	    bugtracker => {
 		web	=> 'https://github.com/trwyant/perl-HTML-TableContentParser/issues',
@@ -56,6 +53,7 @@ if ( $mmv >= 6.4501 ) {
 	    },
 	},
     };
+    $args{META_MERGE}{release_status} = 'stable';
 }
 
 my %build_requires = (
